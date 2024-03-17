@@ -1,6 +1,4 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
-import {InjectModel} from "@nestjs/mongoose";
-import {Model} from "mongoose";
 import {Snippet} from "./snippet.schema";
 import {CreateSnippetDto} from "./dtos/create-snippet-dto";
 import * as path from "path";
@@ -9,7 +7,7 @@ import * as fs from "fs";
 @Injectable()
 export class SnippetsService {
     private readonly dataFilePath = path.resolve(__dirname, '../../src/data/snippets.json');
-    constructor(@InjectModel("Snippet") private snippetModel: Model<Snippet>) {}
+    constructor() {}
     async create(createSnippetDto: CreateSnippetDto): Promise<{ id: string, title: string, code: string}> {
         const snapped = JSON.parse(fs.readFileSync(this.dataFilePath, 'utf-8'));
         const id = Math.floor(Math.random() * 999);
